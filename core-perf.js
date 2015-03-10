@@ -6,10 +6,19 @@ var api = {
     },
 
     createTimeline: function() {
-        var timeline = document.createElement('div');
+        var timeline = $(document.createElement('div')),
+            body     = $('body');
+        
         timeline.id = "timeline";
-        timeline.style.cssText = "position: fixed; z-index: 6000; left: 0; bottom: 0; background-color: black; width: 100%; height: 2em;";
-        document.body.appendChild(timeline);
+        timeline.css({
+            position: 'fixed',
+            top: 0,
+            bottom: 0,
+            width: 100%,
+            height: 3em,
+            backgroundColor: 'black'
+        });
+        body.append(timeline);
     }
 };
 
