@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+
+  "name": "Perf Extension",
+  "description": "Access performance metrics",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "background": {
+      "scripts": ["background.js"]
+  },
+  "permissions": [
+    "activeTab"
+  ]
+}
