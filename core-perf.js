@@ -88,6 +88,7 @@ var api = {
                 'position': 'fixed',
                 'left' : 0,
                 'bottom' : 0,
+                'z-index' : '6000',
                 'height' : '500px'
             });
         }
