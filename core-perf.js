@@ -51,8 +51,7 @@ var api = {
         .then(loadVisualisation);
 
         function loadVisualisation() {
-            google.load("visualization", "1.1", {packages:["timeline"]});
-            google.setOnLoadCallback(drawChart);
+            google.load("visualization", "1", {packages:["timeline"], callback: drawChart});
         }
         
         function drawChart() {
