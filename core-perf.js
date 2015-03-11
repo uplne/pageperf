@@ -33,7 +33,9 @@ var api = {
     visualizeData: function() {
         this.loadScript("https://www.google.com/jsapi")
         .then(function() {
-            google.load("visualization", "1", {packages:["timeline"], callback: this.drawChart});
+            google.load("visualization", "1", {packages:["timeline"], callback: function() {
+                this.drawChart();
+            }.bind(this)});
         }.bind(this));
     },
 
