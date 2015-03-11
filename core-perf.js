@@ -68,19 +68,18 @@ var api = {
             dataTable.addColumn({ type: 'number', id: 'End' });*/
 
             dataTable.addColumn('string', 'Name');
-            dataTable.addColumn('number', 'Salary');
+            dataTable.addColumn('number', 'Time');
 
             var arr = _.chain(data)
                 .sortBy('startTime')
                 .map(function(item, index) {
                     return [
                         item.name,
-                        item.timeStart
+                        item.startTime
                     ]
                 })
                 .value();
 
-            console.log(arr);
             dataTable.addRows(arr);
 
             chart.draw(dataTable, {showRownNumber: true});
