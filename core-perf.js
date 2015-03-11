@@ -66,7 +66,7 @@ var api = {
     visualizeData: function() {
         var container = document.createElement('div');
         container.id = 'visualization';
-        document.body.append(container);
+        document.body.appendChild(container);
 
         var arr = _chain(data)
             .map(function(item, index) {
