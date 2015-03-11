@@ -48,7 +48,7 @@ var api = {
 
     visualizeData: function() {
         this.loadScript("https://www.google.com/jsapi")
-        .then(loadVisualization);
+        .then(loadVisualisation);
 
         function loadVisualisation() {
             google.load("visualization", "1.1", {packages:["timeline"]});
