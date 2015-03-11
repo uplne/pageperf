@@ -71,7 +71,7 @@ var api = {
                 .sortBy('startTime')
                 .map(function(item, index) {
                     return [
-                        'script',
+                        getType(item.name),
                         item.name,
                         item.startTime,
                         item.startTime + 10
@@ -83,6 +83,11 @@ var api = {
             dataTable.addRows(arr);
 
             chart.draw(dataTable);
+        }
+
+        function getType(data) {
+            var item = data.split(' ')[0];
+            return (item === 'gu.Commercial' || item === 'gu.DFP') ? 'Commercial' : 'Other';
         }
     }
 };
