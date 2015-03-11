@@ -68,7 +68,7 @@ var api = {
         container.id = 'visualization';
         document.body.appendChild(container);
 
-        var arr = _chain(data)
+        var arr = _.chain(data)
             .map(function(item, index) {
                 return {
                     id: index,
