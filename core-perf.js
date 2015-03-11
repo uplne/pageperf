@@ -65,6 +65,7 @@ var api = {
             dataTable.addColumn({ type: 'string', id: 'ID' });
             dataTable.addColumn({ type: 'string', id: 'Name' });
             dataTable.addColumn({ type: 'number', id: 'Start' });
+            dataTable.addColumn({ type: 'number', id: 'End' });
 
             var arr = _.chain(data)
                 .sortBy('startTime')
@@ -72,6 +73,7 @@ var api = {
                     return [
                         index + '',
                         item.name,
+                        item.startTime / 1000,
                         item.startTime / 1000
                     ]
                 })
