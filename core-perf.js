@@ -51,7 +51,7 @@ var api = {
         .then(loadVisualisation);
 
         function loadVisualisation() {
-            google.load("visualization", "1", {packages:["timeline"], callback: drawChart});
+            google.load("visualization", "1", {packages:["table"], callback: drawChart});
         }
         
         function drawChart() {
@@ -62,19 +62,20 @@ var api = {
             var chart = new google.visualization.Timeline(container);
             var dataTable = new google.visualization.DataTable();
 
-            dataTable.addColumn({ type: 'string', id: 'ID' });
+            /*dataTable.addColumn({ type: 'string', id: 'ID' });
             dataTable.addColumn({ type: 'string', id: 'Name' });
             dataTable.addColumn({ type: 'number', id: 'Start' });
-            dataTable.addColumn({ type: 'number', id: 'End' });
+            dataTable.addColumn({ type: 'number', id: 'End' });*/
+
+            dataTable.addColumn('string', 'Name');
+            dataTable.addColumn('number', 'Salary');
 
             var arr = _.chain(data)
                 .sortBy('startTime')
                 .map(function(item, index) {
                     return [
-                        index + '',
                         item.name,
-                        index + 10,
-                        index + 11
+                        item.timeStart
                     ]
                 })
                 .value();
@@ -82,7 +83,7 @@ var api = {
             console.log(arr);
             dataTable.addRows(arr);
 
-            chart.draw(dataTable);
+            chart.draw(dataTable, {showRownNumber: true});
         }
     }
 };
