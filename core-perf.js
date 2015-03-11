@@ -12,7 +12,7 @@ var api = {
             this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')
         ]).then(function() {
             this.visualizeData();
-        }.bind(this))
+        }.bind(this));
     },
 
     loadScript: function(url) {
@@ -30,42 +30,34 @@ var api = {
         return scriptPromise;
     },
 
-    createTimeline: function() {
-        var timeline = $(document.createElement('div')),
-            body     = $('body');
-        
-        timeline.id = "timeline";
-        timeline.css({
-            position: 'fixed',
-            top: 0,
-            bottom: 0,
-            width: '100%',
-            height: '3em',
-            backgroundColor: 'black'
-        });
-        body.append(timeline);
-    },
-
     visualizeData: function() {
         this.loadScript("https://www.google.com/jsapi")
-        .then(loadVisualisation);
+        .then(function() {
+            google.load("visualization", "1", {packages:["timeline"], callback: this.drawChart});
+        }.bind(this));
+    },
 
-        function loadVisualisation() {
-            google.load("visualization", "1", {packages:["timeline"], callback: drawChart});
-        }
-        
-        function drawChart() {
+    drawChart: function() {
             var container = document.createElement('div');
             container.id = 'visualization';
             document.body.appendChild(container);
+            $(container).css({
+                'position': 'fixed',
+                'left' : 0,
+                'bottom' : 0,
+                'z-index' : '6000'
+            });
 
             var chart = new google.visualization.Timeline(container);
             var dataTable = new google.visualization.DataTable();
+            var options = {
+                height: window.innerHeight
+            };
 
             dataTable.addColumn({ type: 'string', id: 'ID' });
             dataTable.addColumn({ type: 'string', id: 'Name' });
             dataTable.addColumn({ type: 'number', id: 'Start' });
-            dataTable.addColumn({ type: 'number', id: 'Start' });
+            dataTable.addColumn({ type: 'number', id: 'End' });
 
             var arr = _.chain(data)
                 .sortBy('startTime')
@@ -77,54 +69,40 @@ var api = {
                         item.startTime + 10
                     ]
                 })
-                .value();
+                .value()
+                .concat(this.getPerformanceTiming());
 
-            arr = arr.concat(getPerformanceTiming());
             console.log(arr);
             dataTable.addRows(arr);
-
-            var options = {
-                height: window.innerHeight
-            };
-
             chart.draw(dataTable, options);
-
-            $(container).css({
-                'position': 'fixed',
-                'left' : 0,
-                'bottom' : 0,
-                'z-index' : '6000'
-            });
         }
 
         function getType(data) {
-            var item = data.split(' ')[0];
-            return (item === 'gu.Commercial' || item === 'gu.DFP') ? 'Commercial' : 'Other';
+            return (_.includes(['gu.Commercial','gu.DFP'], data.split(' ')[0]) ? 'Commercial' : 'Other';
         }
-
-        function getPerformanceTiming() {
-            var timing = window.performance.timing;
-            return [
-                [
-                'Timing',
-                'domContentLoadedEvent',
-                (timing.domContentLoadedEventStart - timing.responseEnd) / 1000,
-                (timing.domContentLoadedEventStart - timing.responseEnd) / 1000
-                ],
-                [
-                'Timing',
-                'loadEvent',
-                (timing.loadEventEnd - timing.responseEnd) / 1000,
-                (timing.loadEventEnd - timing.responseEnd) / 1000
-                ],
-                [
-                'Timing',
-                'domComplete',
-                (timing.domComplete - timing.responseEnd) / 1000,
-                (timing.domComplete - timing.responseEnd) / 1000
-                ]
-            ];
-        }
+    },
+    getPerformanceTiming: function() {
+        var timing = window.performance.timing;
+        return [
+            [
+            'Timing',
+            'domContentLoadedEvent',
+            (timing.domContentLoadedEventStart - timing.responseEnd) / 1000,
+            (timing.domContentLoadedEventStart - timing.responseEnd) / 1000
+            ],
+            [
+            'Timing',
+            'loadEvent',
+            (timing.loadEventEnd - timing.responseEnd) / 1000,
+            (timing.loadEventEnd - timing.responseEnd) / 1000
+            ],
+            [
+            'Timing',
+            'domComplete',
+            (timing.domComplete - timing.responseEnd) / 1000,
+            (timing.domComplete - timing.responseEnd) / 1000
+            ]
+        ];
     }
 };
 
