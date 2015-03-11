@@ -9,9 +9,7 @@ var api = {
     loadScripts: function() {
         Promise.all([
             this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js'),
-            this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'),
-            this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/vis/3.10.0/vis.js'),
-            this.loadCSS('https://cdnjs.cloudflare.com/ajax/libs/vis/3.10.0/vis.min.css'),
+            this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')
         ]).then(this.visualizeData)
     },
 
@@ -29,24 +27,7 @@ var api = {
 
         return scriptPromise;
     },
-
-    loadCSS: function(url) {
-        var scriptPromise = new Promise(function(resolve, reject) {
-            var script = document.createElement('link');
-            script.setAttribute("rel", "stylesheet");
-            script.setAttribute("type", "text/css");
-            script.setAttribute("href", url);
-
-            script.addEventListener('load', function() {
-                resolve(url);
-            }, false);
-
-            document.body.appendChild(script);
-        });
-
-        return scriptPromise;
-    },
-
+    
     createTimeline: function() {
         var timeline = $(document.createElement('div')),
             body     = $('body');
@@ -64,38 +45,36 @@ var api = {
     },
 
     visualizeData: function() {
-        require(['vis'], function(vis) {
+        this.loadScript("https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
+       'version':'1','packages':['timeline']}]")
+        .then(drawChart);
+        
+        function drawChart() {
             var container = document.createElement('div');
             container.id = 'visualization';
             document.body.appendChild(container);
 
+            var chart = new google.visualization.Timeline(container);
+            var dataTable = new google.visualization.DataTable();
+
+            dataTable.addColumn({ type: 'string', id: 'Name' });
+            dataTable.addColumn({ type: 'time', id: 'Start' });
+
             var arr = _.chain(data)
                 .map(function(item, index) {
-                    return {
-                        id: index,
-                        content: item.name,
-                        start: item.time
-                    }
+                    return [
+                        index,
+                        item.name,
+                        item.time
+                    ]
                 })
                 .sortBy('time')
                 .value();
-      
-            var items = new vis.DataSet(arr);
 
-            // Configuration for the Timeline
-            var options = {
-                editable: true,
-                start: arr[0].start,
-                end: arr[arr.length - 1].start
-            };
+            dataTable.addRows(arr);
 
-            // Create a Timeline
-            var timeline = new vis.Timeline(
-                container,
-                items,
-                options
-            );
-        });
+            chart.draw(dataTable);
+        }
     }
 };
 
