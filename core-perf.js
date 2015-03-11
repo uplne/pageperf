@@ -102,25 +102,25 @@ var api = {
         }
 
         function getPerformanceTiming() {
-            var data = window.performance.timing;
+            var timing = window.performance.timing;
             return [
                 [
                 'Timing',
                 'domContentLoadedEvent'
-                (data.domContentLoadedEventStart - data.responseEnd) / 1000,
-                (data.domContentLoadedEventStart - data.responseEnd) / 1000
+                (timing.domContentLoadedEventStart - timing.responseEnd) / 1000,
+                (timing.domContentLoadedEventStart - timing.responseEnd) / 1000
                 ],
                 [
                 'Timing',
                 'loadEvent',
-                (data.loadEventEnd - data.responseEnd) / 1000,
-                (data.loadEventEnd - data.responseEnd) / 1000
+                (timing.loadEventEnd - timing.responseEnd) / 1000,
+                (timing.loadEventEnd - timing.responseEnd) / 1000
                 ],
                 [
                 'Timing',
                 'domComplete',
-                (data.domComplete - data.responseEnd) / 1000,
-                (data.domComplete - data.responseEnd) / 1000
+                (timing.domComplete - timing.responseEnd) / 1000,
+                (timing.domComplete - timing.responseEnd) / 1000
                 ]
             ];
         }
