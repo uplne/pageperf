@@ -83,6 +83,12 @@ var api = {
             dataTable.addRows(arr);
 
             chart.draw(dataTable);
+
+            $(container).css({
+                'position': 'absolute',
+                'left' : 0,
+                'bottom' : 0
+            });
         }
 
         function getType(data) {
