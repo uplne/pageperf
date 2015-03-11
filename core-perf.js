@@ -47,8 +47,13 @@ var api = {
     },
 
     visualizeData: function() {
-        this.loadScript("https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['timeline']}]}")
-        .then(drawChart);
+        this.loadScript("https://www.google.com/jsapi")
+        .then(loadVisualization);
+
+        function loadVisualisation() {
+            google.load("visualization", "1.1", {packages:["timeline"]});
+            google.setOnLoadCallback(drawChart);
+        }
         
         function drawChart() {
             var container = document.createElement('div');
