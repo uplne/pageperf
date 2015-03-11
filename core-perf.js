@@ -79,7 +79,7 @@ var api = {
                 })
                 .value();
 
-            arr.concat(getPerformanceTiming());
+            arr = arr.concat(getPerformanceTiming());
             console.log(arr);
             dataTable.addRows(arr);
 
