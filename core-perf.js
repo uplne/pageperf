@@ -80,6 +80,7 @@ var api = {
                 .value();
 
             arr.push(getPerformanceTiming());
+            console.log(arr);
             dataTable.addRows(arr);
 
             var options = {
