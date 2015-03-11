@@ -74,7 +74,7 @@ var api = {
                         index + '',
                         item.name,
                         item.startTime / 1000,
-                        item.startTime / 1000
+                        item.startTime / 1000 + 1
                     ]
                 })
                 .value();
