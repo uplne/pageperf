@@ -85,9 +85,10 @@ var api = {
             chart.draw(dataTable);
 
             $(container).css({
-                'position': 'absolute',
+                'position': 'fixed',
                 'left' : 0,
-                'bottom' : 0
+                'bottom' : 0,
+                'height' : '500px'
             });
         }
 
