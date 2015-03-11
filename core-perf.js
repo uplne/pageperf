@@ -69,7 +69,6 @@ var api = {
                 .sortBy('startTime')
                 .map(function(item, index) {
                     return [
-                        index,
                         item.name,
                         item.startTime
                     ]
