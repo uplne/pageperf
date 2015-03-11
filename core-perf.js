@@ -65,6 +65,7 @@ var api = {
             dataTable.addColumn({ type: 'string', id: 'ID' });
             dataTable.addColumn({ type: 'string', id: 'Name' });
             dataTable.addColumn({ type: 'number', id: 'Start' });
+            dataTable.addColumn({ type: 'number', id: 'Start' });
 
             var arr = _.chain(data)
                 .sortBy('startTime')
@@ -72,7 +73,8 @@ var api = {
                     return [
                         'script',
                         item.name,
-                        item.startTime
+                        item.startTime,
+                        item.startTime + 10
                     ]
                 })
                 .value();
