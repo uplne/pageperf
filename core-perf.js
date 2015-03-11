@@ -106,7 +106,7 @@ var api = {
             return [
                 [
                 'Timing',
-                'domContentLoadedEvent'
+                'domContentLoadedEvent',
                 (timing.domContentLoadedEventStart - timing.responseEnd) / 1000,
                 (timing.domContentLoadedEventStart - timing.responseEnd) / 1000
                 ],
