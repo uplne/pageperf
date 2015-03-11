@@ -77,7 +77,7 @@ var api = {
         chart.draw(dataTable, options);
 
         function getType(data) {
-            return (_.includes(['gu.Commercial','gu.DFP'], data.split(' ')[0]) ? 'Commercial' : 'Other';
+            return (_.includes(['gu.Commercial','gu.DFP'], data.split(' ')[0])) ? 'Commercial' : 'Other';
         }
     },
     getPerformanceTiming: function() {
