@@ -27,7 +27,7 @@ var api = {
 
         return scriptPromise;
     },
-    
+
     createTimeline: function() {
         var timeline = $(document.createElement('div')),
             body     = $('body');
@@ -45,8 +45,7 @@ var api = {
     },
 
     visualizeData: function() {
-        this.loadScript("https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
-       'version':'1','packages':['timeline']}]")
+        this.loadScript("https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['timeline']}]")
         .then(drawChart);
         
         function drawChart() {
