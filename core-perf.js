@@ -53,6 +53,7 @@ var api = {
         var chart = new google.visualization.Timeline(container);
         var dataTable = new google.visualization.DataTable();
         var options = {
+            width: window.innerWidth,
             height: window.innerHeight
         };
 
