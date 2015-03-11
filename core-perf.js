@@ -59,7 +59,7 @@ var api = {
             container.id = 'visualization';
             document.body.appendChild(container);
 
-            var chart = new google.visualization.Timeline(container);
+            var chart = new google.visualization.Table(container);
             var dataTable = new google.visualization.DataTable();
 
             /*dataTable.addColumn({ type: 'string', id: 'ID' });
