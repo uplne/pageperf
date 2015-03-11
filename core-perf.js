@@ -66,16 +66,17 @@ var api = {
             dataTable.addColumn({ type: 'time', id: 'Start' });
 
             var arr = _.chain(data)
+                .sortBy('startTime')
                 .map(function(item, index) {
                     return [
                         index,
                         item.name,
-                        item.time
+                        item.startTime
                     ]
                 })
-                .sortBy('time')
                 .value();
 
+            console.log(arr);
             dataTable.addRows(arr);
 
             chart.draw(dataTable);
