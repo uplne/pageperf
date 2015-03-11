@@ -72,7 +72,7 @@ var api = {
                     return [
                         index + '',
                         item.name,
-                        item.startTime
+                        item.startTime / 1000
                     ]
                 })
                 .value();
