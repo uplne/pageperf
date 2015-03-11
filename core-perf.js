@@ -82,7 +82,7 @@ var api = {
             dataTable.addRows(arr);
 
             var options = {
-                height: window.innerHeight;
+                height: window.innerHeight
             };
 
             chart.draw(dataTable, options);
