@@ -79,6 +79,7 @@ var api = {
                 })
                 .value();
 
+            arr.push(getPerformanceTiming());
             dataTable.addRows(arr);
 
             var options = {
@@ -98,6 +99,30 @@ var api = {
         function getType(data) {
             var item = data.split(' ')[0];
             return (item === 'gu.Commercial' || item === 'gu.DFP') ? 'Commercial' : 'Other';
+        }
+
+        function getPerformanceTiming() {
+            var data = window.performance.timing;
+            return [
+                [
+                'Timing',
+                'domContentLoadedEvent'
+                (data.domContentLoadedEventStart - data.responseEnd) / 1000,
+                (data.domContentLoadedEventStart - data.responseEnd) / 1000
+                ],
+                [
+                'Timing',
+                'loadEvent',
+                (data.loadEventEnd - data.responseEnd) / 1000,
+                (data.loadEventEnd - data.responseEnd) / 1000
+                ],
+                [
+                'Timing',
+                'domComplete',
+                (data.domComplete - data.responseEnd) / 1000,
+                (data.domComplete - data.responseEnd) / 1000
+                ]
+            ];
         }
     }
 };
