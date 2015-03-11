@@ -71,10 +71,8 @@ var api = {
                     item.startTime + 10
                 ]
             })
-            .value();
-
-            console.log(arr);
-        var arr = arr.concat(this.getPerformanceTiming());
+            .value()
+            .concat(this.getPerformanceTiming());
 
         console.log(arr);
         dataTable.addRows(arr);
