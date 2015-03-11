@@ -62,6 +62,7 @@ var api = {
             var chart = new google.visualization.Timeline(container);
             var dataTable = new google.visualization.DataTable();
 
+            dataTable.addColumn({ type: 'string', id: 'ID' });
             dataTable.addColumn({ type: 'string', id: 'Name' });
             dataTable.addColumn({ type: 'number', id: 'Start' });
 
@@ -69,6 +70,7 @@ var api = {
                 .sortBy('startTime')
                 .map(function(item, index) {
                     return [
+                        index,
                         item.name,
                         item.startTime
                     ]
