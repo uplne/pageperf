@@ -79,10 +79,13 @@ var api = {
                 })
                 .value();
 
-            console.log(arr);
             dataTable.addRows(arr);
 
-            chart.draw(dataTable);
+            var options = {
+                height: window.innerHeight;
+            };
+
+            chart.draw(dataTable, options);
 
             $(container).css({
                 'position': 'fixed',
