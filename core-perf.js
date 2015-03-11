@@ -64,36 +64,38 @@ var api = {
     },
 
     visualizeData: function() {
-        var container = document.createElement('div');
-        container.id = 'visualization';
-        document.body.appendChild(container);
+        require(['vis'], function(vis) {
+            var container = document.createElement('div');
+            container.id = 'visualization';
+            document.body.appendChild(container);
 
-        var arr = _.chain(data)
-            .map(function(item, index) {
-                return {
-                    id: index,
-                    content: item.name,
-                    start: item.time
-                }
-            })
-            .sortBy('time')
-            .value();
-  
-        var items = new vis.DataSet(arr);
+            var arr = _.chain(data)
+                .map(function(item, index) {
+                    return {
+                        id: index,
+                        content: item.name,
+                        start: item.time
+                    }
+                })
+                .sortBy('time')
+                .value();
+      
+            var items = new vis.DataSet(arr);
 
-        // Configuration for the Timeline
-        var options = {
-            editable: true,
-            start: arr[0].start,
-            end: arr[arr.length - 1].start
-        };
+            // Configuration for the Timeline
+            var options = {
+                editable: true,
+                start: arr[0].start,
+                end: arr[arr.length - 1].start
+            };
 
-        // Create a Timeline
-        var timeline = new vis.Timeline(
-            container,
-            items,
-            options
-        );
+            // Create a Timeline
+            var timeline = new vis.Timeline(
+                container,
+                items,
+                options
+            );
+        });
     }
 };
 
