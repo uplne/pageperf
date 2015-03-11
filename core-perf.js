@@ -10,7 +10,9 @@ var api = {
         Promise.all([
             this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js'),
             this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')
-        ]).then(this.visualizeData)
+        ]).then(function() 
+            this.visualizeData();
+        }.bind(this))
     },
 
     loadScript: function(url) {
