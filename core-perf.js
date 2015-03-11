@@ -38,44 +38,43 @@ var api = {
     },
 
     drawChart: function() {
-            var container = document.createElement('div');
-            container.id = 'visualization';
-            document.body.appendChild(container);
-            $(container).css({
-                'position': 'fixed',
-                'left' : 0,
-                'bottom' : 0,
-                'z-index' : '6000'
-            });
+        var container = document.createElement('div');
+        container.id = 'visualization';
+        document.body.appendChild(container);
+        $(container).css({
+            'position': 'fixed',
+            'left' : 0,
+            'bottom' : 0,
+            'z-index' : '6000'
+        });
 
-            var chart = new google.visualization.Timeline(container);
-            var dataTable = new google.visualization.DataTable();
-            var options = {
-                height: window.innerHeight
-            };
+        var chart = new google.visualization.Timeline(container);
+        var dataTable = new google.visualization.DataTable();
+        var options = {
+            height: window.innerHeight
+        };
 
-            dataTable.addColumn({ type: 'string', id: 'ID' });
-            dataTable.addColumn({ type: 'string', id: 'Name' });
-            dataTable.addColumn({ type: 'number', id: 'Start' });
-            dataTable.addColumn({ type: 'number', id: 'End' });
+        dataTable.addColumn({ type: 'string', id: 'ID' });
+        dataTable.addColumn({ type: 'string', id: 'Name' });
+        dataTable.addColumn({ type: 'number', id: 'Start' });
+        dataTable.addColumn({ type: 'number', id: 'End' });
 
-            var arr = _.chain(data)
-                .sortBy('startTime')
-                .map(function(item, index) {
-                    return [
-                        getType(item.name),
-                        item.name,
-                        item.startTime,
-                        item.startTime + 10
-                    ]
-                })
-                .value()
-                .concat(this.getPerformanceTiming());
+        var arr = _.chain(data)
+            .sortBy('startTime')
+            .map(function(item, index) {
+                return [
+                    getType(item.name),
+                    item.name,
+                    item.startTime,
+                    item.startTime + 10
+                ]
+            })
+            .value()
+            .concat(this.getPerformanceTiming());
 
-            console.log(arr);
-            dataTable.addRows(arr);
-            chart.draw(dataTable, options);
-        }
+        console.log(arr);
+        dataTable.addRows(arr);
+        chart.draw(dataTable, options);
 
         function getType(data) {
             return (_.includes(['gu.Commercial','gu.DFP'], data.split(' ')[0]) ? 'Commercial' : 'Other';
