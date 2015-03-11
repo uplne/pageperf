@@ -63,7 +63,7 @@ var api = {
             var dataTable = new google.visualization.DataTable();
 
             dataTable.addColumn({ type: 'string', id: 'Name' });
-            dataTable.addColumn({ type: 'time', id: 'Start' });
+            dataTable.addColumn({ type: 'number', id: 'Start' });
 
             var arr = _.chain(data)
                 .sortBy('startTime')
