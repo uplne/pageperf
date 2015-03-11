@@ -1,30 +1,50 @@
+var data;
 var api = {
     renderData: function() {
-        var data = window.performance.getEntriesByType('mark');
+        data = window.performance.getEntriesByType('mark');
 
         this.loadScripts();
-        this.createTimeline();
-        this.parseData(data);
     },
 
     loadScripts: function() {
-        var lodash = document.createElement('script');
-        lodash.src = 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js';
-        document.body.appendChild(lodash);
+        Promise.all([
+            loadScript('https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js'),
+            loadScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'),
+            loadScript('https://cdnjs.cloudflare.com/ajax/libs/vis/3.10.0/vis.min.js'),
+            loadCSS('https://cdnjs.cloudflare.com/ajax/libs/vis/3.10.0/vis.min.css'),
+        ]).then(this.visualizeData)
+    },
 
-        var jquery = document.createElement('script');
-        jquery.src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js';
-        document.body.appendChild(jquery);
+    loadScript: function(url) {
+        var scriptPromise = new Promise(function(resolve, reject) {
+            var script = document.createElement('script');
+            script.src = url;
 
-        var visjs = document.createElement('script');
-        visjs.src = 'https://cdnjs.cloudflare.com/ajax/libs/vis/3.10.0/vis.min.js';
-        document.body.appendChild(visjs);
+            script.addEventListener('load', function() {
+                resolve(url);
+            }, false);
 
-        var viscss = document.createElement('link');
-        viscss.setAttribute("rel", "stylesheet");
-        viscss.setAttribute("type", "text/css");
-        viscss.setAttribute("href", "https://cdnjs.cloudflare.com/ajax/libs/vis/3.10.0/vis.min.css");
-        document.body.appendChild(viscss);
+            document.body.appendChild(script);
+        });
+
+        return scriptPromise;
+    },
+
+    loadCSS: function(url) {
+        var scriptPromise = new Promise(function(resolve, reject) {
+            var script = document.createElement('link');
+            script.setAttribute("rel", "stylesheet");
+            script.setAttribute("type", "text/css");
+            script.setAttribute("href", url);
+
+            script.addEventListener('load', function() {
+                resolve(url);
+            }, false);
+
+            document.body.appendChild(script);
+        });
+
+        return scriptPromise;
     },
 
     createTimeline: function() {
@@ -43,30 +63,21 @@ var api = {
         body.append(timeline);
     },
 
-    parseData: function(data) {
-        console.log(_.chain(data)
-        .map(function(item) {
-            return {
-                name: item.name,
-                time: item.startTime
-            }
-        })
-        .sortBy('time')
-        .value());
-    },
-
-    visualizeData: function(data) {
+    visualizeData: function() {
         var container = document.createElement('div');
         container.id = 'visualization';
         document.body.append(container);
 
-        var arr = _.map(data, function(item, index) {
-            return {
-                id: index,
-                content: item.name,
-                start: item.time
-            }
-        })
+        var arr = _chain(data)
+            .map(function(item, index) {
+                return {
+                    id: index,
+                    content: item.name,
+                    start: item.time
+                }
+            })
+            .sortBy('time')
+            .value();
   
         var items = new vis.DataSet(arr);
 
