@@ -69,7 +69,7 @@ var api = {
                     getType(item.name),
                     item.name,
                     item.startTime,
-                    item.startTime + 10
+                    item.startTime + 1
                 ]
             })
             .value();
